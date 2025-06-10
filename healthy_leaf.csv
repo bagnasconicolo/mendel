@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<!--[if lte IE 10]>
+<script type="text/javascript">
+  if ( document.URL.indexOf( 'ie' ) === -1 ) {
+    window.location = '/ie.html';
+  }
+</script>
+<![endif]-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Server Error</title>
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="description" content="Invalid URL: /package/download/leaf-optical-properties-experiment-database--lopex93-?format=csv">
+  <meta name="keywords" content="">
+
+  <link rel="icon" sizes="192x192" href="/assets/icon_192.png">
+  <link rel="icon" sizes="128x128" href="/assets/icon_128.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="/assets/icon_128.png">
+  <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/assets/icon_128.png">
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65988958-10"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
+  <script>var APP_CONFIG = {"appRoutes":["search","package"],"ckanUrl":"https://data.ecosis.org","ecosmlUrl":"https://ecosml.org","serverEnv":"prod","filterLabelMap":{"ecosis.organization":"Organization"},"geoFilter":"ecosis.geojson","git":{"branch":"","tag":""},"seo":{"title":"EcoSIS - Spectral Library","keywords":"EcoSIS, Ecological Spectral Information System, Spectral Library","description":"EcoSIS, Ecological, Spectral, Library"},"gaCode":"UA-60014992-1","schema":{"Measurement":[{"name":"Acquisition Method","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Contact","Other","Pixel","Proximal"],"description":"Minimum measurement unit for your spectra (i.e. contact probe, proximal with X-degree foreoptic, pixel, other).","allowOther":true},{"name":"Sample Platform","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":["Airplane","Boom","Satellite","Tower","UAV"],"description":"Platform from which the spectral measurements were made (e.g. handheld, boom, tram, UAV).","allowOther":false},{"name":"Measurement Venue","level":2,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Greenhouse","Laboratory","Other","Outdoor"],"description":"Setting in which the spectral measurements were made.","allowOther":true},{"name":"Target Type","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Animal","Bark","Branch","Canopy","Flower","Leaf","Mineral","NPV","Other","Reference","Rock","Soil","Water"],"description":"Describes the target that was measured.","allowOther":true},{"name":"Measurement Quantity","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Absorptance","DN","Index","Other","Radiance","Reflectance","Transflectance","Transmittance"],"description":"Scale for spectral instensity (e.g. DN, radiance, irradiance, reflectance)","allowOther":true},{"name":"Index Name","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Measurement quantity's index name.  Please provide if Measurement Quantity = \"Index\"","allowOther":false},{"name":"Measurement Units","level":2,"input":"controlled-single","units":"","spectraLevel":true,"vocabulary":["%","W/m^2","W/m^2/Hz","W/m^2/nm","W/m^2/um","W/sr/m^2"],"description":"Measuremnt units","allowOther":false},{"name":"Wavelength Units","level":2,"input":"controlled-single","units":"","spectraLevel":true,"vocabulary":["Other","Unitless","nm","um"],"description":"Wavelength units (e.g. nm, um, Hz)","allowOther":true},{"name":"Target Status","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Dried","Fresh","Green","Ground","Liquid","Live","Other","Panel","Standard"],"description":"State of the measurement target.","allowOther":true},{"name":"Light Source","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Lamp","Laser","Other","Sun"],"description":"Description of the light source used for your spectral measurements","allowOther":true},{"name":"Light Source Specifications","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Foreoptic Type","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Bare Fiber","Contact Probe","Cosine Diffuser","Foreoptic","Gershon Tube","Integrating Sphere","Leaf Clip","None","Other"],"description":"Description of the foreoptic used to make your spectral measurement","allowOther":true},{"name":"Foreoptic Field of View","level":2,"input":"text","units":"integer degrees","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Foreoptic Specifications","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false}],"Processing Information":[{"name":"Processing Averaged","level":2,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["No","Yes"],"description":"Is the measurement an average of multiple measurements?","allowOther":false},{"name":"Processing Interpolated","level":2,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["No","Yes"],"description":"Is the measurement interpolated?","allowOther":false},{"name":"Processing Resampled","level":2,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["No","Yes"],"description":"Is the measurement resampled? (e.g. are multiple wavelengths averaged?)","allowOther":false},{"name":"Processing Information Details","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"Other details about processing are provided here.","allowOther":false}],"Instrument":[{"name":"Instrument Manufacturer","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Spectrometer manufacturer.","allowOther":false},{"name":"Instrument Model","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Spectrometer model.","allowOther":false},{"name":"Instrument Serial Number","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false}],"Theme":[{"name":"Theme","level":1,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Agriculture","Biochemistry","Ecology","Forest","Global Change","Land Cover","Other","Phenology","Physiology","Urban","Water Quality"],"description":"Research context for the the spectral measurements.","allowOther":true},{"name":"Keywords","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Ecosystem Type","level":2,"input":"controlled","units":"","spectraLevel":true,"vocabulary":["Aquatic","Coastal","Crops","Forest","Grassland","Wetland"],"description":"","allowOther":false}],"Location":[{"name":"Latitude","level":1,"input":"latlng","units":"decimal degree","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Longitude","level":1,"input":"latlng","units":"decimal degree","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"geojson","level":1,"input":"geojson","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Location Name","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false}],"Date":[{"name":"Sample Collection Date","level":1,"input":"date","units":"ISO Date ","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Measurement Date","level":2,"input":"date","units":"ISO Date ","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false},{"name":"Phenological Status","level":2,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false}],"Species":[{"name":"Common Name","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Common name of the target that was measured.","allowOther":false},{"name":"Latin Genus","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Latin genus of the target that was measured.","allowOther":false},{"name":"Latin Species","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"Latin species of the target that was measured.","allowOther":false},{"name":"USDA Symbol","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"USDA code of the target that was measured.","allowOther":false},{"name":"Vegetation Type","level":1,"input":"text","units":"","spectraLevel":true,"vocabulary":null,"description":"","allowOther":false}],"Citation":[{"name":"Citation","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Citation DOI","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Website","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Author","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Author Email","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Maintainer","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Maintainer Email","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Funding Source","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false},{"name":"Funding Source Grant Number","level":2,"input":"text","units":"","spectraLevel":false,"vocabulary":null,"description":"","allowOther":false}]}};</script>
+
+  
+  <script>
+    var CORK_LOADER_VERSIONS = {
+      loader : '0.1.3',
+      bundle : '2.0.9'
+    }
+  </script>
+  <script src="/loader/loader.js?_=0.1.3"></script>
+
+  <style>
+    html, body {
+      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #444;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      height: 100vh !important;
+    }
+  </style>
+</head>
+<body>
+
+  <noscript>
+    The EcoSIS Spectral Library requires JavaScript to
+    be enabled to view.  You have either disabled JavaScript or your
+    browser does not support it.
+  </noscript>
+
+  <ecosis-search></ecosis-search>
+
+  <script id="seo-jsonld" type="application/ld+json">
+    
+  </script>
+</body>
+</html>
