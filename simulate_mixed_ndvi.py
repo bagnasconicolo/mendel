@@ -3,7 +3,9 @@
 
 This script computes NDVI values for combinations of three reflectance
 profiles. Percentages of each component are varied in steps, and the
-resulting NDVI for each mixture is printed.
+resulting NDVI for each mixture is printed.  The provided
+``SERAPH_R118_absorbtion (1).json`` file describes a **blue** filter,
+so it should not be used as the red band for NDVI.
 """
 from __future__ import annotations
 
@@ -12,7 +14,10 @@ import bisect
 import csv
 import json
 import math
-from typing import Iterable, List, Tuple
+from typing import Dict, Iterable, List, Tuple
+
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def load_filter_json(path: str) -> Tuple[List[float], List[float]]:
@@ -128,12 +133,39 @@ def mix_spectra(
     return result
 
 
+def plot_heatmap(values: Dict[Tuple[int, int], float], step: int) -> None:
+    """Plot a heatmap of NDVI values."""
+    steps = list(range(0, 101, step))
+    idx = {v: i for i, v in enumerate(steps)}
+    matrix = np.full((len(steps), len(steps)), np.nan)
+    for (leaf, litter), val in values.items():
+        matrix[idx[litter], idx[leaf]] = val
+    fig, ax = plt.subplots(figsize=(6, 5))
+    im = ax.imshow(
+        matrix,
+        origin="lower",
+        extent=[0, 100, 0, 100],
+        cmap="viridis",
+        aspect="auto",
+    )
+    ax.set_xlabel("Leaf %")
+    ax.set_ylabel("Litter %")
+    ax.set_title("NDVI for vegetation mixtures")
+    fig.colorbar(im, ax=ax, label="NDVI")
+    plt.tight_layout()
+    plt.savefig("ndvi_heatmap.png")
+    print("Saved plot to ndvi_heatmap.png")
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Simulate NDVI for mixtures of leaf litter, healthy leaf, and ground"
     )
     p.add_argument("--step", type=int, default=25, help="percentage step size")
-    p.add_argument("--red-filter", default="SERAPH_R118_absorbtion (1).json")
+    p.add_argument(
+        "--red-filter",
+        help="JSON file for red band filter (default: 620-680 nm box filter)",
+    )
     p.add_argument(
         "--nir-filter",
         help="JSON file for NIR filter (default: 780-900 nm box filter)",
@@ -143,7 +175,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    red_filter = load_filter_json(args.red_filter)
+    if args.red_filter:
+        red_filter = load_filter_json(args.red_filter)
+    else:
+        red_filter = box_filter(620, 680)
     if args.nir_filter and args.nir_filter.endswith(".json"):
         nir_filter = load_filter_json(args.nir_filter)
     else:
@@ -158,6 +193,7 @@ def main() -> None:
     wl_common = sorted(set(wl_lit) & set(wl_g) & set(wl_h))
 
     step = args.step
+    values: Dict[Tuple[int, int], float] = {}
     for leaf_pct in range(0, 101, step):
         for litter_pct in range(0, 101 - leaf_pct, step):
             ground_pct = 100 - leaf_pct - litter_pct
@@ -171,6 +207,9 @@ def main() -> None:
             print(
                 f"litter {litter_pct:3d}%, leaf {leaf_pct:3d}%, ground {ground_pct:3d}% -> NDVI {ndvi:.3f}"
             )
+            values[(leaf_pct, litter_pct)] = ndvi
+
+    plot_heatmap(values, step)
 
 
 if __name__ == "__main__":

@@ -2,9 +2,10 @@
 """Simulate filtered reflectance for mixtures of vegetation types.
 
 This script mixes leaf litter, healthy leaf, and ground reflectance profiles
-in varying percentages and reports the sensor reading after a specified
-spectral filter. The filter profile should be provided in the same JSON format
-as ``SERAPH_R118_absorbtion (1).json``.
+in varying percentages and reports the sensor reading after passing through a
+spectral filter.  The filter profile should be provided in the same JSON
+format as ``SERAPH_R118_absorbtion (1).json``.  Note that this R118 profile
+represents a **blue** filter rather than a red one.
 """
 from __future__ import annotations
 
@@ -12,7 +13,10 @@ import argparse
 import bisect
 import csv
 import json
-from typing import Iterable, List, Tuple
+from typing import Dict, Iterable, List, Tuple
+
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def load_filter_json(path: str) -> Tuple[List[float], List[float]]:
@@ -110,6 +114,30 @@ def mix_spectra(
     return result
 
 
+def plot_heatmap(values: Dict[Tuple[int, int], float], step: int, filter_name: str) -> None:
+    """Plot a heatmap of filter-weighted reflectance."""
+    steps = list(range(0, 101, step))
+    idx = {v: i for i, v in enumerate(steps)}
+    matrix = np.full((len(steps), len(steps)), np.nan)
+    for (leaf, litter), val in values.items():
+        matrix[idx[litter], idx[leaf]] = val
+    fig, ax = plt.subplots(figsize=(6, 5))
+    im = ax.imshow(
+        matrix,
+        origin="lower",
+        extent=[0, 100, 0, 100],
+        cmap="viridis",
+        aspect="auto",
+    )
+    ax.set_xlabel("Leaf %")
+    ax.set_ylabel("Litter %")
+    ax.set_title(f"Filtered reflectance ({filter_name})")
+    fig.colorbar(im, ax=ax, label="Reflectance")
+    plt.tight_layout()
+    plt.savefig("filtered_reflectance.png")
+    print("Saved plot to filtered_reflectance.png")
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Simulate filtered reflectance for mixtures of leaf litter, healthy leaf, and ground",
@@ -136,6 +164,7 @@ def main() -> None:
     wl_common = sorted(set(wl_lit) & set(wl_g) & set(wl_h))
 
     step = args.step
+    values: Dict[Tuple[int, int], float] = {}
     for leaf_pct in range(0, 101, step):
         for litter_pct in range(0, 101 - leaf_pct, step):
             ground_pct = 100 - leaf_pct - litter_pct
@@ -145,12 +174,19 @@ def main() -> None:
                 ground_pct / 100.0,
             )
             mixed = mix_spectra(
-                wl_common, (wl_lit, refl_lit), (wl_h, refl_h), (wl_g, refl_g), weights
+                wl_common,
+                (wl_lit, refl_lit),
+                (wl_h, refl_h),
+                (wl_g, refl_g),
+                weights,
             )
             value = band_value(wl_common, mixed, *filt)
             print(
                 f"litter {litter_pct:3d}%, leaf {leaf_pct:3d}%, ground {ground_pct:3d}% -> reading {value:.3f}"
             )
+            values[(leaf_pct, litter_pct)] = value
+
+    plot_heatmap(values, step, args.filter)
 
 
 if __name__ == "__main__":
