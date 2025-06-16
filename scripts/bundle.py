@@ -22,22 +22,27 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter1d
 import pandas as pd
 
+# ── directory setup --------------------------------------------------
+BASE_DIR    = Path(__file__).resolve().parent.parent
+DATA_DIR    = BASE_DIR / "data"
+RESULTS_DIR = BASE_DIR / "results"
+FIGURES_DIR = BASE_DIR / "figures"
+
 # ── inputs & URLs ────────────────────────────────────────────────────
-json_path   = Path("SERAPH_R118_absorbtion (1).json")
+json_path   = DATA_DIR / "SERAPH_R118_absorbtion (1).json"
 url_chl_a   = "https://omlc.org/spectra/PhotochemCAD/data/122-abs.txt"
 url_chl_b   = "https://omlc.org/spectra/PhotochemCAD/data/125-abs.txt"
-file_chl_a  = Path("chl_a_122_abs.txt")
-file_chl_b  = Path("chl_b_125_abs.txt")
+file_chl_a  = DATA_DIR / "chl_a_122_abs.txt"
+file_chl_b  = DATA_DIR / "chl_b_125_abs.txt"
 
 # Local copy of litter spectra archive (provided by user)
-leaf_zip_path = Path("doi_10_5061_dryad_hdr7sqvrk__v20240426.zip")
-file_leaf     = Path("intact_spec.csv")
-file_healthy  = Path("2012-leaf-reflectance-spectra-of-tropical-trees-in-tapajos-national-forest.csv")
+leaf_zip_path = DATA_DIR / "doi_10_5061_dryad_hdr7sqvrk__v20240426.zip"
+file_leaf     = DATA_DIR / "intact_spec.csv"
+file_healthy  = DATA_DIR / "2012-leaf-reflectance-spectra-of-tropical-trees-in-tapajos-national-forest.csv"
 
 # Soil spectra (dry & wet) provided by user
-file_soil     = Path("dataSpec_P5.csv")     # uploaded CSV
-
-zip_out     = Path("spectra_bundle.zip")
+file_soil     = DATA_DIR / "dataSpec_P5.csv"     # uploaded CSV
+zip_out     = RESULTS_DIR / "spectra_bundle.zip"
 wl_min, wl_max = 350, 950   # nm
 # ─────────────────────────────────────────────────────────────────────
 
@@ -199,7 +204,7 @@ refl_dead   = refl_dead[m_leaf]
 refl_leaf_n = normalise(refl_dead)
 
 # 5) optionally parse the ground spectrum CSV: (if present)
-file_ground = Path("ground_spec.csv")
+file_ground = DATA_DIR / "ground_spec.csv"
 if file_ground.exists():
     ground_df     = pd.read_csv(file_ground)
     wl_cols_g     = [c for c in ground_df.columns if c.isdigit()]
@@ -283,7 +288,7 @@ plt.title("R118 Filter Transmittance and NDVI-Relevant Reflectance Spectra")
 plt.legend()
 plt.tight_layout()
 
-fig_name = Path("transmission_vs_chl_reflect.png")
+fig_name = FIGURES_DIR / "transmission_vs_chl_reflect.png"
 plt.savefig(fig_name, dpi=300)
 
 # Optionally zoom x‐axis and show interactively
