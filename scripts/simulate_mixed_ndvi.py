@@ -12,7 +12,11 @@ import bisect
 import csv
 import json
 import math
+from pathlib import Path
 from typing import Iterable, List, Tuple
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
 
 
 def load_filter_json(path: str) -> Tuple[List[float], List[float]]:
@@ -133,7 +137,7 @@ def parse_args() -> argparse.Namespace:
         description="Simulate NDVI for mixtures of leaf litter, healthy leaf, and ground"
     )
     p.add_argument("--step", type=int, default=25, help="percentage step size")
-    p.add_argument("--red-filter", default="SERAPH_R118_absorbtion (1).json")
+    p.add_argument("--red-filter", default=str(DATA_DIR / "SERAPH_R118_absorbtion (1).json"))
     p.add_argument(
         "--nir-filter",
         help="JSON file for NIR filter (default: 780-900 nm box filter)",
@@ -149,10 +153,10 @@ def main() -> None:
     else:
         nir_filter = box_filter(780, 900)
 
-    wl_lit, refl_lit = read_average_dictcsv("intact_spec.csv")
-    wl_g, refl_g = read_average_dictcsv("ground_spec.csv")
+    wl_lit, refl_lit = read_average_dictcsv(str(DATA_DIR / "intact_spec.csv"))
+    wl_g, refl_g = read_average_dictcsv(str(DATA_DIR / "ground_spec.csv"))
     wl_h, refl_h = read_average_rowcsv(
-        "2012-leaf-reflectance-spectra-of-tropical-trees-in-tapajos-national-forest.csv"
+        str(DATA_DIR / "2012-leaf-reflectance-spectra-of-tropical-trees-in-tapajos-national-forest.csv")
     )
 
     wl_common = sorted(set(wl_lit) & set(wl_g) & set(wl_h))

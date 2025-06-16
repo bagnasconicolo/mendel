@@ -1,10 +1,16 @@
 import json
+from pathlib import Path
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
+RESULTS_DIR = BASE_DIR / "results"
+FIGURES_DIR = BASE_DIR / "figures"
+
 # Load data and drop last (transmission) point:
-with open('SERAPH_R118_absorbtion (1).json') as f:
+with (DATA_DIR / 'SERAPH_R118_absorbtion (1).json').open() as f:
     data = json.load(f)['datasetColl'][0]['data'][:-1]
 wavelengths = np.array([p['value'][0] for p in data])
 transmissions = np.array([p['value'][1] for p in data])
@@ -30,7 +36,7 @@ plt.ylabel('Transmission')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('poly12_19_trans_fits.png')
+plt.savefig(FIGURES_DIR / 'poly12_19_trans_fits.png')
 plt.show()
 
 # Fit 14th-degree polynomial
@@ -50,7 +56,7 @@ plt.ylabel('Transmission')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('poly14_trans_fit.png')
+plt.savefig(FIGURES_DIR / 'poly14_trans_fit.png')
 plt.show()
 
 # Plot residues
@@ -63,7 +69,7 @@ plt.ylabel('Residue')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('poly14_trans_residues.png')
+plt.savefig(FIGURES_DIR / 'poly14_trans_residues.png')
 plt.show()
 
 # Print parameters table and equation
@@ -82,7 +88,7 @@ output = {
     "coefficients": coeffs_14.tolist(),
     "equation": "y = " + equation
 }
-with open('poly14_trans_fit.json', 'w') as f:
+with (RESULTS_DIR / 'poly14_trans_fit.json').open('w') as f:
     json.dump(output, f, indent=2)
 
 # --- Sine fit to residues ---
@@ -125,7 +131,7 @@ plt.ylabel('Residue')
 plt.legend(ncol=2)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('poly_trans_residues_5_20.png')
+plt.savefig(FIGURES_DIR / 'poly_trans_residues_5_20.png')
 plt.show()
 
 # --- Additional visualization: Heatmap of residues vs degree and wavelength ---
@@ -151,7 +157,7 @@ plt.xlabel('Wavelength (nm)')
 plt.ylabel('Polynomial Degree')
 plt.title('Residue Heatmap: Degree vs Wavelength')
 plt.tight_layout()
-plt.savefig('residue_trans_heatmap.png')
+plt.savefig(FIGURES_DIR / 'residue_trans_heatmap.png')
 plt.show()
 
 # --- Plot standard deviation of residues vs polynomial degree ---
@@ -170,7 +176,7 @@ plt.ylabel('Residue Standard Deviation')
 plt.title('Standard Deviation of Residues vs Polynomial Degree')
 plt.grid(axis='x')
 plt.tight_layout()
-plt.savefig('residue_trans_stdev_vs_degree.png')
+plt.savefig(FIGURES_DIR / 'residue_trans_stdev_vs_degree.png')
 plt.show()
 
 # Adding plot of data without fits
@@ -182,5 +188,5 @@ plt.ylabel('Transmission')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('kosen_spectrometer_transmission_data.png')
+plt.savefig(FIGURES_DIR / 'kosen_spectrometer_transmission_data.png')
 plt.show()

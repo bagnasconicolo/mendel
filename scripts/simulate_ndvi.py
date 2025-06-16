@@ -20,6 +20,7 @@ import bisect
 import csv
 import json
 import math
+from pathlib import Path
 from typing import Iterable, List, Tuple
 
 
@@ -83,8 +84,8 @@ def box_filter(start: float, end: float) -> Tuple[List[float], List[float]]:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Simulate NDVI with spectral filters")
-    p.add_argument("--csv", default="intact_spec.csv", help="CSV with reflectance data")
-    p.add_argument("--red-filter", default="SERAPH_R118_absorbtion (1).json")
+    p.add_argument("--csv", default=str(Path(__file__).resolve().parent.parent / "data" / "intact_spec.csv"), help="CSV with reflectance data")
+    p.add_argument("--red-filter", default=str(Path(__file__).resolve().parent.parent / "data" / "SERAPH_R118_absorbtion (1).json"))
     p.add_argument(
         "--nir-filter",
         help="JSON file for NIR filter (default: 780-900 nm box filter)",
